@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll Car Animation | ITZFIZZ</title>
+  <meta name="description" content="Scroll-driven hero section animation with smooth car movement, dynamic letter reveal, and impact metrics." />
+
+  <!-- Google Fonts: Space Grotesk & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR / HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">ITZ<span class="gradient-text">FIZZ</span></span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Audio Synth Toggle -->
+        <button class="btn-icon" id="audioToggleBtn" title="Toggle Sound Engine" aria-label="Toggle Sound Engine">
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCROLL-DRIVEN HERO SECTION -->
+  <main>
+    <section class="hero-scroll-container" id="heroTrack">
+      
+      <!-- Pinned Viewport Container -->
+      <div class="pinned-viewport" id="pinnedViewport">
+        
+        <!-- Ambient Grid Background & Light Orbs -->
+        <div class="ambient-fx">
+          <div class="grid-overlay"></div>
+          <div class="glow-orb orb-cyan"></div>
+          <div class="glow-orb orb-green"></div>
+        </div>
+
+        <!-- Central High-Speed Highway / Track -->
+        <div class="road-track-wrapper">
+          <div class="road-surface" id="roadSurface">
+            
+            <!-- Road Markings & Centerline -->
+            <div class="road-borders"></div>
+            <div class="road-centerline" id="roadCenterline"></div>
+            <div class="speed-streaks" id="speedStreaks"></div>
+
+            <!-- Dynamic Glowing Green Energy Trail Behind the Car -->
+            <div class="energy-trail" id="energyTrail">
+              <div class="trail-glow"></div>
+            </div>
+
+            <!-- Main Letter-Spaced Headline directly inside/across the Road -->
+            <div class="value-add" id="valueText">
+              <span class="value-letter">W</span>
+              <span class="value-letter">E</span>
+              <span class="value-letter">L</span>
+              <span class="value-letter">C</span>
+              <span class="value-letter">O</span>
+              <span class="value-letter">M</span>
+              <span class="value-letter">E</span>
+              <span class="value-letter space">&nbsp;</span>
+              <span class="value-letter">I</span>
+              <span class="value-letter">T</span>
+              <span class="value-letter">Z</span>
+              <span class="value-letter">F</span>
+              <span class="value-letter">I</span>
+              <span class="value-letter">Z</span>
+              <span class="value-letter">Z</span>
+            </div>
+
+            <!-- Main Interactive Sports Car Object -->
+            <div class="car-vehicle" id="carVehicle">
+              <!-- Headlight Beams Projecting Forward -->
+              <div class="headlight-beam top-beam"></div>
+              <div class="headlight-beam bottom-beam"></div>
+
+              <!-- Car Graphic (Transparent Titan Hypercar) -->
+              <img 
+                src="assets/car-titan.png" 
+                alt="Titan GT Hypercar Top View" 
+                class="car-image" 
+                id="carImage"
+              />
+              
+              <!-- Exhaust Flame / Heat Distortion -->
+              <div class="exhaust-flame"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- IMPACT METRIC / STATISTIC CARDS (Revealed One by One on Scroll) -->
+        <div class="stats-cards-grid" id="statsGrid">
+          
+          <!-- Metric Box 1 (Top Left/Mid) - Yellow -->
+          <div class="stat-card" id="box1" data-threshold="0.18">
+            <div class="stat-number"><span class="counter" data-target="58">0</span><span class="stat-suffix">%</span></div>
+            <p class="stat-desc">Increase in pick up point use</p>
+          </div>
+
+          <!-- Metric Box 2 (Bottom Left/Mid) - Cyan -->
+          <div class="stat-card" id="box2" data-threshold="0.42">
+            <div class="stat-number"><span class="counter" data-target="23">0</span><span class="stat-suffix">%</span></div>
+            <p class="stat-desc">Decreased in customer phone calls</p>
+          </div>
+
+          <!-- Metric Box 3 (Top Right) - Slate Dark -->
+          <div class="stat-card" id="box3" data-threshold="0.68">
+            <div class="stat-number"><span class="counter" data-target="27">0</span><span class="stat-suffix">%</span></div>
+            <p class="stat-desc">Increase in pick up point use</p>
+          </div>
+
+          <!-- Metric Box 4 (Bottom Right) - Orange -->
+          <div class="stat-card" id="box4" data-threshold="0.88">
+            <div class="stat-number"><span class="counter" data-target="40">0</span><span class="stat-suffix">%</span></div>
+            <p class="stat-desc">Decreased in customer phone calls</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Script File -->
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+/* SCROLL-DRIVEN HERO SECTION ANIMATION - STYLESHEET
+   Clean, Understandable, Modern CSS with GPU Transforms & Glassmorphism */
+
+:root {
+  /* Color Tokens */
+  --bg-dark: #121212;
+  --road-bg: #1e1e1e;
+  --accent-trail: #45db7d;
+  --accent-cyan: #00f2fe;
+  
+  /* Reference Box Colors */
+  --box1-bg: #def54f; /* Yellow */
+  --box2-bg: #6ac9ff; /* Cyan / Light Blue */
+  --box3-bg: #2a2a2a; /* Slate Dark */
+  --box4-bg: #fa7328; /* Volcanic Orange */
+  
+  --text-primary: #ffffff;
+  --text-dark: #111111;
+  --font-main: 'Outfit', -apple-system, sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+/* Header / Navbar */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 16px 32px;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-trail));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* HERO SCROLL CONTAINER & PINNED VIEWPORT */
+.hero-scroll-container {
+  height: 300vh;
+  position: relative;
+  background-color: var(--bg-dark);
+}
+
+.pinned-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #1a2233 0%, var(--bg-dark) 80%);
+}
+
+/* Ambient Visual Effects */
+.ambient-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.glow-orb {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+}
+.orb-cyan { top: 15%; left: 15%; background: var(--accent-cyan); }
+.orb-green { bottom: 15%; right: 15%; background: var(--accent-trail); }
+
+/* HIGHWAY / ROAD TRACK */
+.road-track-wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100vw;
+  height: 220px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.road-surface {
+  width: 100%;
+  height: 100%;
+  background: var(--road-bg);
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+}
+
+/* Glowing Road Curb Lines */
+.road-borders::before, .road-borders::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #def54f, #45db7d, #00f2fe, #def54f);
+}
+.road-borders::before { top: 0; }
+.road-borders::after { bottom: 0; }
+
+.road-centerline {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0px,
+    rgba(255, 255, 255, 0.2) 30px,
+    transparent 30px,
+    transparent 65px
+  );
+  z-index: 1;
+}
+
+.speed-streaks {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0, 242, 254, 0.02) 0,
+    rgba(0, 242, 254, 0.02) 2px,
+    transparent 2px,
+    transparent 120px
+  );
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ENERGY TRAIL BEHIND CAR (GREEN ACCENT)
+   ========================================================================== */
+.energy-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0; /* Updated dynamically by GSAP */
+  background: var(--accent-trail);
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 25px rgba(69, 219, 125, 0.5);
+}
+
+.trail-glow {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  width: 15px;
+  height: 100%;
+  background: #ffffff;
+  filter: blur(6px);
+}
+
+/* ==========================================================================
+   LETTER-SPACED HEADLINE (INSIDE ROAD - SHOWN ONE BY ONE AS CAR RUNS)
+   ========================================================================== */
+.value-add {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 0.8vw, 14px);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.value-letter {
+  font-family: var(--font-main);
+  font-size: clamp(2.6rem, 5.8vw, 5.8rem);
+  font-weight: 900;
+  color: #111111; /* Dark high-contrast over green trail & road */
+  opacity: 0; /* Starts hidden, revealed one by one as car passes */
+  transform: scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  will-change: opacity, transform;
+  display: inline-block;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.value-letter.space {
+  width: clamp(1rem, 2vw, 2.5rem);
+}
+
+.value-letter.revealed {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* ==========================================================================
+   HYPERCAR VEHICLE OBJECT
+   ========================================================================== */
+.car-vehicle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 260px;
+  height: 140px;
+  z-index: 10;
+  will-change: transform;
+}
+
+.car-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.7));
+  user-select: none;
+  pointer-events: none;
+}
+
+.headlight-beam {
+  position: absolute;
+  right: -220px;
+  width: 240px;
+  height: 25px;
+  background: linear-gradient(90deg, rgba(0, 242, 254, 0.7) 0%, rgba(0, 242, 254, 0) 100%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+.top-beam { top: 25px; transform: rotate(3deg); }
+.bottom-beam { bottom: 25px; transform: rotate(-3deg); }
+
+.exhaust-flame {
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 10px;
+  background: radial-gradient(ellipse at right, var(--accent-cyan), var(--accent-trail), transparent);
+  filter: blur(2px);
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   IMPACT STATISTIC / METRIC CARDS (Exact Reference Match & Revealed 1-by-1)
+   ========================================================================== */
+.stats-cards-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 18;
+}
+
+.stat-card {
+  position: absolute;
+  padding: 26px 30px;
+  border-radius: 12px;
+  font-family: var(--font-main);
+  opacity: 0; /* Starts completely hidden */
+  transform: translateY(30px) scale(0.94);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  pointer-events: none;
+  min-width: 240px;
+  max-width: 300px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+.stat-card.visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto;
+}
+
+/* Box 1 (Top Left/Mid) - Yellow */
+#box1 {
+  top: 6%;
+  left: 45%;
+  background: var(--box1-bg);
+  color: var(--text-dark);
+}
+
+/* Box 2 (Bottom Left/Mid) - Cyan */
+#box2 {
+  bottom: 6%;
+  left: 32%;
+  background: var(--box2-bg);
+  color: var(--text-dark);
+}
+
+/* Box 3 (Top Right) - Dark Slate */
+#box3 {
+  top: 6%;
+  right: 10%;
+  background: var(--box3-bg);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Box 4 (Bottom Right) - Orange */
+#box4 {
+  bottom: 6%;
+  right: 10%;
+  background: var(--box4-bg);
+  color: var(--text-dark);
+}
+
+.stat-number {
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-desc {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .road-track-wrapper { height: 180px; }
+  .car-vehicle { width: 220px; height: 110px; }
+  
+  .value-letter { font-size: 3.2rem; }
+  
+  .stat-card {
+    padding: 18px 22px;
+    max-width: 230px;
+  }
+  .stat-number { font-size: 2.5rem; }
+  .stat-desc { font-size: 0.85rem; }
+  
+  #box1 { left: 45%; top: 4%; }
+  #box2 { left: 25%; bottom: 4%; }
+  #box3 { right: 4%; top: 4%; }
+  #box4 { right: 4%; bottom: 4%; }
+}
+
+@media (max-width: 768px) {
+  .site-header { padding: 12px 16px; }
+  
+  .road-track-wrapper { height: 140px; }
+  .car-vehicle { width: 160px; height: 80px; }
+  
+  .value-add { left: 3%; }
+  .value-letter { font-size: 2rem; }
+  
+  .stat-card {
+    padding: 12px 14px;
+    max-width: 170px;
+  }
+  .stat-number { font-size: 1.8rem; }
+  .stat-desc { font-size: 0.72rem; }
+  
+  #box1 { top: 4%; left: 4%; }
+  #box2 { bottom: 4%; left: 4%; }
+  #box3 { top: 4%; right: 4%; }
+  #box4 { bottom: 4%; right: 4%; }
+}
